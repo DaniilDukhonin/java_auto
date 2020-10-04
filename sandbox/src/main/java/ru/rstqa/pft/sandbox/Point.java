@@ -2,8 +2,8 @@ package ru.rstqa.pft.sandbox;
 
 public class Point {
 
-  public static double x;
-  public static double y;
+  public double x;
+  public double y;
 
 
   public Point(double x, double y) {
