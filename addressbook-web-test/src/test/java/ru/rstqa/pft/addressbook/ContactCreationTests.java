@@ -29,10 +29,10 @@ public class ContactCreationTests {
   }
 
   @Test
-  public void testContactCreation(String firstname, String middlename, String title, String address, String email) throws Exception {
+  public void testContactCreation() throws Exception {
 
     initContactCreation();
-    fillContactForm(new ContactData(firstname, middlename, title, address, email));
+    fillContactForm(new ContactData("Alex", "John", "Dr", "Germany", "gmail@gmail.com"));
     submitContactCreation();
     returnToHomePage();
     logout();
