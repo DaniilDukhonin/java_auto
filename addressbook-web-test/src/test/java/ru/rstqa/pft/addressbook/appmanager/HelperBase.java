@@ -2,6 +2,7 @@ package ru.rstqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 
 public class HelperBase {
@@ -9,7 +10,7 @@ public class HelperBase {
 
 
   public HelperBase(WebDriver wd) {
-    this.wd=wd;
+    this.wd = wd;
   }
 
   protected void click(By locator) {
@@ -18,8 +19,17 @@ public class HelperBase {
 
   protected void type(By locator, String text) {
     click(locator);
-    wd.findElement(locator).clear();
-    wd.findElement(locator).sendKeys(text);
+    //Лекция 3.6. Оптимизация заполнения форм: оставляем не изменяющися значения в полях
+    if (text != null) {
+      String existingText = wd.findElement(locator).getAttribute("value");
+      if (!text.equals(existingText)){
+        wd.findElement(locator).clear();
+        wd.findElement(locator).sendKeys(text);
+
+      }
+
+
+    }
   }
 
   public boolean isAlertPresent() {
@@ -32,4 +42,14 @@ public class HelperBase {
   }
 
 
+  //метод для проверки наличия элемента
+  boolean isElementPresent(By locator) {
+      try {
+        wd.findElement(locator);
+        return true;
+      } catch (NoSuchElementException ex) {
+        return false;
+
+      }
+    }
 }

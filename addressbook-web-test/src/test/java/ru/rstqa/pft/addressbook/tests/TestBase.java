@@ -14,7 +14,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 public class TestBase {
 
 
-  protected final ApplicationManager app = new ApplicationManager(BrowserType.IE);
+  protected final ApplicationManager app = new ApplicationManager(BrowserType.FIREFOX);
 
   @BeforeMethod(alwaysRun = true)
   public void setUp() throws Exception {
