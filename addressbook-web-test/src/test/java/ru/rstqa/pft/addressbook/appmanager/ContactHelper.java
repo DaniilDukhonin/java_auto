@@ -1,6 +1,6 @@
 package ru.rstqa.pft.addressbook.appmanager;
 
-import org.jetbrains.annotations.NotNull;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import ru.rstqa.pft.addressbook.model.ContactData;
@@ -20,7 +20,7 @@ public class ContactHelper extends HelperBase{
     click(By.xpath("(//input[@name='submit'])[2]"));
   }
 
-  public void fillContactForm(@NotNull ContactData contactData) {
+  public void fillContactForm( ContactData contactData) {
     type(By.name("firstname"), contactData.getFirstname());
     type(By.name("lastname"), contactData.getLastname());
     type(By.name("title"), contactData.getTitle());
@@ -30,5 +30,18 @@ public class ContactHelper extends HelperBase{
 
   public void initContactCreation() {
     click(By.linkText("add new"));
+  }
+
+  public void selectContact(){ click(By.name("selected[]"));}
+
+  public void initContactDeletion() { click(By.xpath("//input[@value='Delete']"));}
+
+  public void closeDialogWindow () { wd.switchTo().alert().accept();}
+
+
+  public void initContactModification() { click (By.xpath("//img[@alt='Edit']"));
+  }
+
+  public void submitContactModification() {click (By.name("update"));
   }
 }
