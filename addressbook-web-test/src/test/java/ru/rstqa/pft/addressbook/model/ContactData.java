@@ -2,14 +2,14 @@ package ru.rstqa.pft.addressbook.model;
 
 public class ContactData {
   private final String firstname;
-  private final String middlename;
+  private final String lastname;
   private final String title;
   private final String address;
   private final String email;
 
-  public ContactData(String firstname, String middlename, String title, String address, String email) {
+  public ContactData(String firstname, String lastname, String title, String address, String email) {
     this.firstname = firstname;
-    this.middlename = middlename;
+    this.lastname = lastname;
     this.title = title;
     this.address = address;
     this.email = email;
@@ -19,8 +19,8 @@ public class ContactData {
     return firstname;
   }
 
-  public String getMiddlename() {
-    return middlename;
+  public String getLastname() {
+    return lastname;
   }
 
   public String getTitle() {
