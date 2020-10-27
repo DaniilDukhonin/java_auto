@@ -15,13 +15,6 @@ public class ContactHelper extends HelperBase {
 
   }
 
-  public void returnToHomePage() {
-    if (isElementPresent(By.id("maintable"))){
-      return;
-    }
-    click(By.linkText("home page"));
-  }
-
   public void submitContactCreation() {
     click(By.xpath("(//input[@name='submit'])[2]"));
   }
@@ -36,13 +29,13 @@ public class ContactHelper extends HelperBase {
 
     if (creation) {
       new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
-    }else {
+    } else {
       Assert.assertFalse(isElementPresent(By.name("new_group")));
 
 
     }
 
-    }
+  }
 
 
   public void initContactCreation() {
@@ -68,5 +61,16 @@ public class ContactHelper extends HelperBase {
 
   public void submitContactModification() {
     click(By.name("update"));
+  }
+
+  public void createContact(ContactData contact) {
+    initContactCreation();
+    fillContactForm((contact), true);
+    submitContactCreation();
+    goToHomePage();
+  }
+
+  public boolean isThereAContact() {
+    return isElementPresent(By.name("selected[]"));
   }
 }

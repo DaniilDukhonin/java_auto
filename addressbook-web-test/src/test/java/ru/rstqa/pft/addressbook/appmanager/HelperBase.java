@@ -27,8 +27,6 @@ public class HelperBase {
         wd.findElement(locator).sendKeys(text);
 
       }
-
-
     }
   }
 
@@ -52,4 +50,11 @@ public class HelperBase {
 
       }
     }
+
+  public void goToHomePage() {
+    if (isElementPresent(By.id("maintable"))){
+      return;
+    }
+    click(By.linkText("home page"));
+  }
 }
