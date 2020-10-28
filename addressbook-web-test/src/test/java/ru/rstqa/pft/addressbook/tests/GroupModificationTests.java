@@ -1,5 +1,6 @@
 package ru.rstqa.pft.addressbook.tests;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.rstqa.pft.addressbook.model.GroupData;
 
@@ -7,8 +8,8 @@ public class GroupModificationTests extends TestBase {
 
   @Test
   public void testGroupModification() {
-
     app.getNavigationHelper().gotoGroupPage();
+    int before = app.getGroupHelper().getGroupCount(); //4.3 добоваили счетчик для подсчета групп до и после
 
     if (!app.getGroupHelper().isThereAGroup()) {
       app.getGroupHelper().createGroup(new GroupData(null, "test1", "test1"));
@@ -18,6 +19,9 @@ public class GroupModificationTests extends TestBase {
     app.getGroupHelper().fillGroupForm(new GroupData("test1", "test2", "test3"));
     app.getGroupHelper().submitGroupModification();
     app.getGroupHelper().returnToGroupPage();
+
+    int after = app.getGroupHelper().getGroupCount();
+    Assert.assertEquals(after, before); //считает кол-во до и после -совпасть
 
 
   }
