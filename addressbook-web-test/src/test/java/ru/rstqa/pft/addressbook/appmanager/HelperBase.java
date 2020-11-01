@@ -51,7 +51,7 @@ public class HelperBase {
       }
     }
 
-  public void goToHomePage() {
+  public void homePage() {
     if (isElementPresent(By.id("maintable"))){
       return;
     }

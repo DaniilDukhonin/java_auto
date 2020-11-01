@@ -1,32 +1,36 @@
 package ru.rstqa.pft.addressbook.tests;
 
-import org.openqa.selenium.WebDriver;
-import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.rstqa.pft.addressbook.model.ContactData;
-import java.util.List;
+import ru.rstqa.pft.addressbook.model.Contacts;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.testng.Assert.assertEquals;
 
 public class ContactDeletionTests extends TestBase {
 
-  @Test
-  public void testContactDeletion() {
-    app.getNavigationHelper().goToHomePage();
-    if (!app.getContactHelper().isThereAContact()) {
-      app.getContactHelper().createContact(new ContactData("Mila", "John", "Dr", "Germany", "gmail@gmail.com", "test1"));
+  @BeforeMethod
+  public void ensurePrecond() {
+    app.contact().homePage();
+    if (app.contact().all().size() ==0) {
+      app.contact().create(new ContactData().withFirstname("Alex"));
 
     }
-    List<ContactData> before = app.getContactHelper().getContactList();
-    app.getContactHelper().selectContact(before.size()-1);
-    app.getContactHelper().initContactDeletion();
-    app.getContactHelper().closeDialogWindow();
-
-    List<ContactData> after = app.getContactHelper().getContactList();
-    Assert.assertEquals(after, before.size()-1);
-    app.getNavigationHelper().goToHomePage();
-    before.remove(before.size() - 1);
-    Assert.assertEquals(before, after);
-
-
-
   }
+
+    @Test(enabled = false)
+    public void testContactDeletion () {
+      Contacts before = app.contact().all();
+      ContactData deletedContact = before.iterator().next();
+      int index = before.size() - 1;
+      app.contact().delete(deletedContact);
+      Contacts after = app.contact().all();
+      assertEquals(after.size(), before.size() - 1);
+      assertThat(after, equalTo(before.without(deletedContact)));
+
+
+    }
+
+
 }
