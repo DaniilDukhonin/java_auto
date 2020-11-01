@@ -2,13 +2,12 @@ package ru.rstqa.pft.addressbook.appmanager;
 
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.rstqa.pft.addressbook.model.ContactData;
-import ru.rstqa.pft.addressbook.model.GroupData;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,11 +64,26 @@ public class ContactHelper extends HelperBase {
     click(By.name("update"));
   }
 
-  public void createContact(ContactData contact) {
+  public void create(ContactData contact) {
     initContactCreation();
     fillContactForm((contact), true);
     submitContactCreation();
-    goToHomePage();
+    homePage();
+  }
+
+  public void modify(int index, ContactData contact) {
+    selectContact(index);
+    initContactModification();
+    fillContactForm(contact, false);
+    submitContactModification();
+    homePage();
+  }
+
+  public void delete(int index) {
+    selectContact(index);
+    initContactDeletion();
+    closeDialogWindow();
+    homePage();
   }
 
   public boolean isThereAContact() {
@@ -80,17 +94,15 @@ public class ContactHelper extends HelperBase {
     return wd.findElements(By.name("selected[]")).size();
   }
 
-  public List<ContactData> getContactList() {
+  public List<ContactData> list() {
     List<ContactData> contacts = new ArrayList<ContactData>();
-    List<WebElement> elements = wd.findElements(By.tagName("tr"));
+    List<WebElement> elements = wd.findElements(By.tagName("entry"));
     for (WebElement element : elements) {
       List<WebElement> cells = element.findElements(By.tagName("td.name"));
-      String name = element.getText();
+      String name = cells.get(1).getText();
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-      ContactData contact = new ContactData(id, name, null, null, null, null, null);
-      contacts.add(contact);
+      contacts.add(new ContactData().withId(id).withFirstname(name));
     }
-
     return contacts;
   }
 }
