@@ -1,6 +1,5 @@
 package ru.rstqa.pft.addressbook.tests;
 
-import org.hamcrest.MatcherAssert;
 import org.testng.annotations.Test;
 import ru.rstqa.pft.addressbook.model.ContactData;
 
@@ -24,7 +23,7 @@ public class ContactPhoneTests extends TestBase {
 
   private String mergePhones(ContactData contact) {
     return Arrays.asList(contact.getHomePhone(), contact.getMobilePhone(), contact.getWorkPhone())
-            .stream().filter((s) -> !s.equals(""))
+            .stream().filter((s) -> s.equals(""))
             .map(ContactPhoneTests::cleaned)
             .collect(Collectors.joining("\n"));
 
@@ -56,7 +55,7 @@ public class ContactPhoneTests extends TestBase {
   }
 
   private String mergeEmails(ContactData contact) {
-    return Arrays.asList(contact.getEmail1(), contact.getEmail2(), contact.getEmail3())
+    return Arrays.asList(contact.getEmail(), contact.getEmail2(), contact.getEmail3())
             .stream().filter((s) -> s.equals("")).collect(Collectors.joining("\n"));
       }
 

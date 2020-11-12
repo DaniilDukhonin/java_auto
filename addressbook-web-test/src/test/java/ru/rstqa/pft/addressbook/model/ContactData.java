@@ -13,7 +13,7 @@ public class ContactData {
   private String allPhones;
   private int id = Integer.MAX_VALUE;
 
-  private String email1;
+  private String email;
   private String email2;
   private String email3;
   private String address;
@@ -31,8 +31,8 @@ public class ContactData {
   }
 
 
-  public String getEmail1() {
-    return email1;
+  public String getEmail() {
+    return email;
   }
 
   public String getEmail2() {
@@ -117,8 +117,8 @@ public class ContactData {
     return this;
   }
 
-  public ContactData withEmail1(String email1) {
-    this.email1 = email1;
+  public ContactData withEmail(String email1) {
+    this.email = email1;
     return this;
   }
 
