@@ -85,7 +85,7 @@ public class GroupHelper extends HelperBase {
   }
 
   public int count() {
-    return wd.findElements(By.name("selected[]")).size(); //4.3 установим ему время
+    return wd.findElements(By.name("selected[]")).size();
   }
 
   private Groups groupCache = null;
