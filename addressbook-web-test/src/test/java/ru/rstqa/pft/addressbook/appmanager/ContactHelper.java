@@ -9,11 +9,18 @@ import org.testng.Assert;
 import ru.rstqa.pft.addressbook.model.ContactData;
 import ru.rstqa.pft.addressbook.model.Contacts;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.List;
+import java.util.Properties;
 
 public class ContactHelper extends HelperBase {
+  private Properties properties;
 
-  public ContactHelper(WebDriver wd) {
+
+  public ContactHelper(WebDriver wd, Properties properties) {
     super(wd);
 
   }
@@ -22,12 +29,16 @@ public class ContactHelper extends HelperBase {
     click(By.xpath("(//input[@name='submit'])[2]"));
   }
 
-  public void fillContactForm(ContactData contactData, boolean creation) {
-    type(By.name("firstname"), contactData.getFirstname());
-    type(By.name("lastname"), contactData.getLastname());
-    type(By.name("title"), contactData.getTitle());
-    type(By.name("address"), contactData.getAddress());
-    type(By.name("email"), contactData.getEmail());
+  public void fillContactForm(ContactData contactData, boolean creation) throws IOException {
+    properties = new Properties();
+    String target  =  System.getProperty("target", "local");
+    properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
+
+    type(By.name(properties.getProperty("web.firstname")), contactData.getFirstname());
+    type(By.name(properties.getProperty("web.lastname")), contactData.getLastname());
+    type(By.name(properties.getProperty("web.title")), contactData.getTitle());
+    type(By.name(properties.getProperty("web.address")), contactData.getAddress());
+    type(By.name(properties.getProperty("web.email")), contactData.getEmail());
     attach(By.name("photo"), contactData.getPhoto());
 
     if (creation) {
@@ -64,14 +75,14 @@ public class ContactHelper extends HelperBase {
     click(By.name("update"));
   }
 
-  public void create(ContactData contact) {
+  public void create(ContactData contact) throws IOException {
     initContactCreation();
     fillContactForm((contact), true);
     submitContactCreation();
     homePage();
   }
 
-  public void modify(ContactData contact) {
+  public void modify(ContactData contact) throws IOException {
     selectContactById(contact.getId());
     initContactModification();
     fillContactForm(contact, false);
